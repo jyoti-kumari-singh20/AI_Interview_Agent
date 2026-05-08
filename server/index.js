@@ -1,5 +1,4 @@
 import dns from "dns";
-
 dns.setDefaultResultOrder("ipv4first");
 
 import express from "express"
@@ -8,6 +7,7 @@ import connectDB from "./config/connectDB.js"
 import cookieParser from "cookie-parser"
 import cors from "cors"
 import authRouter from "./routes/auth.route.js"
+import userRouter from "./routes/user.route.js";
 
 dotenv.config()
 
@@ -18,11 +18,11 @@ app.use(cors({
 }
 ))
 
-
 app.use(express.json())
 app.use(cookieParser())
 
 app.use("/api/auth",authRouter)
+app.use("/api/user",userRouter)
 
 const PORT=process.env.PORT || 6000
 app.listen(PORT,()=>{
