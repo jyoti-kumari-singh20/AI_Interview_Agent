@@ -4,13 +4,15 @@ import { HiMiniSparkles } from "react-icons/hi2";
 import { motion } from "motion/react";
 import { FcGoogle } from "react-icons/fc";
 import { signInWithPopup } from 'firebase/auth';
-import {auth ,provider} from '../utils/firebase';
+import {auth ,provider} from '../utils/firebase.js';
 import axios from "axios"
-import { ServerUrl } from '../App';
-import { setUserData } from '../redux/userSlice';
+import { ServerUrl } from '../App.jsx';
+import { setUserData } from '../redux/userSlice.js';
 import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 const Auth = () => {
     const dispatch=useDispatch()
+    const navigate=useNavigate()
     const handleGoogleAuth=async()=>{
         try{
             const response = await signInWithPopup(auth,provider)
@@ -20,7 +22,8 @@ const Auth = () => {
             const result=await axios.post(ServerUrl+"/api/auth/google",
                 {name,email},{withCredentials:true}
             )
-            dispatch(setUserData(result.data))
+            dispatch(setUserData(result.data.user))
+            navigate("/")
         }catch(error){
             console.log(error);
             dispatch(setUserData(null))
