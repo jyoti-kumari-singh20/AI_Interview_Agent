@@ -30,12 +30,12 @@ const Navbar = () => {
         }
     }
   return (
-    <div className='bg-#f3f3f3 flex justify-center px-4 pt-6'>
+    <div className='fixed top-0 left-0 w-full z-50 bg-[#f3f3f3] flex justify-center'>
         <motion.div 
         initial={{opacity:0,y:-40}}
         animate={{opacity:1,y:0}}
         transition={{duration:0.3}}
-        className="w-full max-w-6xl bg-white rounded-3xl shadow-sm border border-gray-200
+        className="w-full max-w-6xl bg-white shadow-sm border border-gray-200
         px-8 py-4 flex justify-between items-center relative">
             <div className='flex items-center gap-3 cursor-pointer'>
                 <div className='bg-black text-white p-2 rounded-lg'>

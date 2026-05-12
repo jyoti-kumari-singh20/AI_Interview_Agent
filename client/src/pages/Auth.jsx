@@ -22,7 +22,7 @@ const Auth = ({isModel=false}) => {
             const result=await axios.post(ServerUrl+"/api/auth/google",
                 {name,email},{withCredentials:true}
             )
-            dispatch(setUserData(result.data.user))
+            dispatch(setUserData(result.data))
             navigate("/")
         }catch(error){
             console.log(error);
