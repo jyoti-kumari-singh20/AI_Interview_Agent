@@ -1,5 +1,5 @@
 import React from "react";
-import BsRobot from "react-icons/bs";
+import { BsRobot } from "react-icons/bs";
 const Footer = () => {
   return (
     <div className="bg-[#f3f3f3] flex justify-end px-4 pb-10 py-4 pt-10">

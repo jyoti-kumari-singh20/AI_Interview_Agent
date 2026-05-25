@@ -29,7 +29,7 @@ const Home = () => {
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col ">
       <Navbar />
-      <div className="flex-1 px-6 py-20 ">
+      <div className="flex-1 px-30 py-20 ">
         <div className="max-w-6xl mx-auto">
           <div className="flex justify-center mb-6">
             <div className="bg-gray-100 text-gray-600 text-sm px-4 py-2 rounded-full flex items-center gap-2">
@@ -260,10 +260,10 @@ const Home = () => {
                   transition={{ duration: 0.5, delay: index * 0.1 }}
                   whileHover={{ y:-6 }}
                   className="bg-white border border-gray-200 rounded-3xl
-                  p-8 shadow-sm hover:shadow-xl transition-all"
+                  p-5 shadow-sm hover:shadow-xl transition-all"
                 >
-                  <div className="flex items-center justify-between gap-6">
-                    <div className="w-0.5 ">
+                  <div className="flex items-center justify-between gap-1">
+                    <div className="w-0.5">
                       <h3 className="text-xl font-semibold mb-3">
                         {mode.title}
                       </h3>
