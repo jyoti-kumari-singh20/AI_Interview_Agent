@@ -1,6 +1,6 @@
 import fs from "fs"
 import * as pdfjsLib from "pdfjs-dist/legacy/build/pdf.mjs"
-import { askAI } from "../services/openRouter.service";
+import { askAI } from "../services/openRouter.service.js";
 export const analyzeResume=async(req,res)=>{
     try {
         if(!req.file){
@@ -48,7 +48,7 @@ export const analyzeResume=async(req,res)=>{
 
         res.json({
             role:parsed.role,
-            experience=parsed.experience,
+            experience:parsed.experience,
             projects:parsed.projects,
             skills:parsed.skills,
             resumeText

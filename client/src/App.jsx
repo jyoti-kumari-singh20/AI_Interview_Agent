@@ -2,11 +2,13 @@ import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import Home from './pages/Home.jsx';
 import Auth from './pages/Auth.jsx';
+import InterviewPage from './pages/InterviewPage.jsx';
 import { useEffect } from 'react';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { setUserData } from './redux/userSlice.js';
 export const ServerUrl="http://localhost:3000"
+
 const App = () => {
   const dispatch=useDispatch()
   useEffect(()=>{
@@ -27,6 +29,7 @@ const App = () => {
     <Routes>
       <Route path='/' element={<Home/>} />
       <Route path='/auth' element={<Auth/>}/>
+      <Route path='/interview' element={<InterviewPage/>}/>
     </Routes>
   );
 }
