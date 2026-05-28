@@ -1,6 +1,7 @@
 import fs from "fs"
 import * as pdfjsLib from "pdfjs-dist/legacy/build/pdf.mjs"
 import { askAI } from "../services/openRouter.service.js";
+import User from "../models/user.model.js";
 export const analyzeResume=async(req,res)=>{
     try {
         if(!req.file){
@@ -61,6 +62,71 @@ export const analyzeResume=async(req,res)=>{
             fs.unlinkSync(Request.file.path);
         }
         res.status(500).json({message:error.message});
+        
+    }
+};
+
+export const generateQuestion=async(req,res)=>{
+    try {
+        const {role,experience,mode,resumeText,projects,skills}=req.body
+        role=role?.trim();
+        experience=experience?.trim();
+        mode=mode?.trim();
+
+        if(!role || !experience || !mode){
+            return res.status(400).json({message:"Role, Experience and Mode are required."})
+        }
+        const user=await User.findById(req.userId)
+        if(!user){
+            return res.status(404).json({
+                message:"User not found."
+            });
+        }
+        if(user.credits<50){
+            return res.status(400).json({
+                message:"Not enough credits. Minimum 50 required."
+            });
+        }
+
+        const projectText=Array.isArray(projects) && projects.length ? 
+        projects.join(", "):"None";
+
+        const skillsText=Array.isArray(skills) && skills.length ? 
+        skills.join(", "):"None";
+
+        const safeResume=resumeText?.trim() || "None";
+        const userPrompt=`
+        Role:${role}
+        Experience:${experience}
+        InterviewMode:${mode}
+        Projects:${projectText}
+        Skills:${skillsText}
+        Resume:${safeResume}`;
+
+        if(!userPrompt.trim()){
+            return res.status(400).json({
+                message:"Prompt content is empty."
+            });
+        }
+        const message=[
+            {
+                role:"system",
+                content:`
+                You are a real human interviewer conducting a professional interview.
+
+                Speak in asimple, natural English as if you are directly talking to the 
+                candidate.
+
+                Generate exactly 10 interview questions.
+
+                Strict RUles:
+                -Each question must contain between 15 and 25 words.
+                `
+            }
+        ]
+    } catch (error) {
+
+
         
     }
 }
