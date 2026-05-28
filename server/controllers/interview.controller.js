@@ -121,9 +121,37 @@ export const generateQuestion=async(req,res)=>{
 
                 Strict RUles:
                 -Each question must contain between 15 and 25 words.
+                -Each question must be a single, complete sentence. 
+                -Do not number them. 
+                -Do not add explanations. 
+                -Do not add extra text before or after. 
+                -One question per line only. 
+                -Keep language simple and conversational. 
+                -Questions must feel practical and realistic.
+
+                Difficulty progression:
+                Question 1 - easy
+                Question 2 - easy
+                Question 3 - easy
+                Question 4 - medium
+                Question 5 - medium
+                Question 6 - medium
+                Question 7 - medium
+                Question 8 - hard
+                Question 9 - hard
+                Question 10 - hard
+
+                Make questions based on the candidate's role, experience, interviewMode, 
+                projects, skills, and resume details.
                 `
+            },
+            {
+                role:"user",
+                content:userPrompt
             }
-        ]
+        ];
+
+        const aiResponse=await askAI(messages);
     } catch (error) {
 
 
