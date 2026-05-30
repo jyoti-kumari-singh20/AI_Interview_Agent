@@ -31,7 +31,7 @@ export const analyzeResume = async (req, res) => {
                 Extract structured data from resume.
                 Return strictly JSON:
                 {"role":"string",
-                "experience":"string:,
+                "experience":"string",
                 "projects":["project1","project2"],
                 "skills":["skill1","skill2"]
                 }`,
@@ -44,7 +44,9 @@ export const analyzeResume = async (req, res) => {
 
     const aiResponse = await askAI(messages);
 
-    const parsed = JSON.parse(aiResponse);
+    const parsed = JSON.parse(aiResponse.replace(/```json/g, "")
+    .replace(/```/g, "")
+    .trim());
 
     fs.unlinkSync(filepath);
 
@@ -58,7 +60,7 @@ export const analyzeResume = async (req, res) => {
   } catch (error) {
     console.error(error);
     if (req.file && fs.existsSync(req.file.path)) {
-      fs.unlinkSync(Request.file.path);
+      fs.unlinkSync(req.file.path);
     }
     res.status(500).json({ message: error.message });
   }
@@ -82,7 +84,7 @@ export const generateQuestion = async (req, res) => {
         message: "User not found.",
       });
     }
-    if (user.credits < 50) {
+    if (user.credits < 0) {
       return res.status(400).json({
         message: "Not enough credits. Minimum 50 required.",
       });
@@ -108,7 +110,7 @@ export const generateQuestion = async (req, res) => {
         message: "Prompt content is empty.",
       });
     }
-    const message = [
+    const messages = [
       {
         role: "system",
         content: `
@@ -153,13 +155,13 @@ export const generateQuestion = async (req, res) => {
 
     const aiResponse = await askAI(messages);
 
-    if (!airesponse || !airesponse.trim()) {
+    if (!aiResponse || !aiResponse.trim()) {
       return res.status(500).json({
         message: "AI return empty response.",
       });
     }
 
-    const questionsArray = airesponse
+    const questionsArray = aiResponse
       .split("\n")
       .map((q) => q.trim())
       .filter((q) => q.length > 0)
@@ -174,7 +176,7 @@ export const generateQuestion = async (req, res) => {
     await user.save();
 
     const interview = await Interview.create({
-      userID: user._id,
+      userId: user._id,
       role,
       experience,
       mode,
@@ -203,7 +205,7 @@ export const generateQuestion = async (req, res) => {
       userName: user.name,
       questions: interview.questions,
     });
-  } catch (error) {
+  } catch (error) { 
     return res
       .status(500)
       .json({ message: `failed to create questions ${error}` });
@@ -239,7 +241,7 @@ export const submitAnswer = async (req, res) => {
         feedback: question.feedback,
       });
     }
-    const message = [
+    const messages = [
       {
         role: "system",
         content: `You are a professional human interviewer evaluating a candidate's answer in a real interview.

@@ -14,7 +14,7 @@ import { setUserData } from "../redux/userSlice";
 
 const Step1Setup = ({ onStart }) => {
   const {userData}=useSelector((state)=>state.user)
-  const dispatch=useDispatch
+  const dispatch=useDispatch();
   const [role, setRole] = useState("");
   const [experience, setExperience] = useState("");
   const [mode, setMode] = useState("Technical");
