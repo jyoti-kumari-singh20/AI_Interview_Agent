@@ -64,6 +64,45 @@ const Step2Interview = ({ interviewData, onFinish }) => {
 
   const videoSource=voiceGender==="male"?maleVideo:femaleVideo;
 
+  const speakText=(text)=>{
+    return new Promise((resolve)=>{
+      if(!window.speechSynthesis|| !selectedVoice){
+        resolve();
+        return;
+      }
+      window.speechSynthesis.cancel();
+
+      const humanText=text.replace(/,/g, ",... ").replace(/\./g, ",... ");
+
+      const utterance = new SpeechSynthesisUtterance(humanText);
+      utterance.voice=selectedVoice;
+
+      utterance.rate=0.92;
+      utterance.pitch=1.05;
+      utterance.volume=1;
+
+      utterance.onstart=()=>{
+        setIsAIPlaying(true);
+        videoRef.current?.play();
+      };
+
+      utterance.onend=()=>{
+        videoRef.current?.pause();
+        videoRef.current.currentTime=0;
+        setIsAIPlaying(false);
+      }
+      setTimeout(()=>{
+        setSubtitle("");
+        resolve();
+      },300);
+
+      setSubtitle(text);
+      window.speechSynthesis.speak(utterance);
+
+    });
+  };
+
+
   
   return (
     <div
@@ -93,9 +132,9 @@ const Step2Interview = ({ interviewData, onFinish }) => {
               <span className="text-sm text-gray-500">
                 Interview Status
               </span>
-              <span className="text-sm font-semibold text-emerald-600">
-                AI Speaking
-              </span>
+              {isAIPlaying && <span className="text-sm font-semibold text-emerald-600">
+                {isAIPlaying ? "AI speaking" : ""}
+              </span>}
             </div>
             <div className="h-px bg-gray-200"></div>
             <div className="flex justify-center">
