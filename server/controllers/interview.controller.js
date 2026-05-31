@@ -84,11 +84,11 @@ export const generateQuestion = async (req, res) => {
         message: "User not found.",
       });
     }
-    if (user.credits < 0) {
-      return res.status(400).json({
-        message: "Not enough credits. Minimum 50 required.",
-      });
-    }
+    // if (user.credits < 0) {
+    //   return res.status(400).json({
+    //     message: "Not enough credits. Minimum 50 required.",
+    //   });
+    // }
 
     const projectText =
       Array.isArray(projects) && projects.length ? projects.join(", ") : "None";
