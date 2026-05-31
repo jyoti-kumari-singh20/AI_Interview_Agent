@@ -9,6 +9,7 @@ import { FaMicrophone } from "react-icons/fa";
 import { useEffect } from "react";
 import axios from 'axios';
 import { ServerUrl } from '../App';
+import { BsArrowLeft } from "react-icons/bs";
 
 const Step2Interview = ({ interviewData, onFinish }) => {
   const { interviewId, questions, userName } = interviewData;
@@ -202,9 +203,19 @@ const Step2Interview = ({ interviewData, onFinish }) => {
 
     try{
       const result=await axios.post(ServerUrl+"/api/interview/submit-answer",
-        {})
-    }catch(error){
+        {
+          interviewId,
+          questionIndex:currentIndex,
+          answer,
+          timeTaken:
+          currentQuestion.timeLimit-timeLeft,
+        },{withCredentials:true})
 
+        setFeedback(result.data.feedback)
+        speakText(result.data.feedback)
+        setIsSubmitting(false)
+    }catch(error){
+      console.log(error);
     }
   }
 
@@ -305,7 +316,7 @@ const Step2Interview = ({ interviewData, onFinish }) => {
          text-gray-800"
           />
 
-          <div className="flex items-center gap-4 mt-6">
+          {!feedback ? (<div className="flex items-center gap-4 mt-6">
             <motion.button
             onClick={toggleMic}
               whileTap={{ scale: 0.9 }}
@@ -315,14 +326,30 @@ const Step2Interview = ({ interviewData, onFinish }) => {
               <FaMicrophone size={20} />
             </motion.button>
             <motion.button
+            onClick={submitAnswer}
+            disabled={isSubmitting}
               whileTap={{ scale: 0.95 }}
               className="flex-1 bg-gradient-to-r from-emerald-600 to-teal-500
           text-white py-3 sm:py-4 rounded-2xl shadow-lg hover:opacity-90
-          transition font-semibold"
+          transition font-semibold disabled:bg-gray-500"
             >
-              Submit Answer
+              {isSubmitting?"Submitting...":"Submit Answer"}
             </motion.button>
-          </div>
+          </div>) : (
+            <motion.div
+            initial={{opacity:0}}
+            animate={{opacity:0}}
+            className="mt-6 bg-emerald-50 border border-emerald-200 p-5 
+            rounded-2xl shadow-sm">
+              <p className="text-emerald-700 font-medium mb-4">{feedback}</p>
+              <button className="w-full bg-gradient-to-r from-emerald-600 to-teal-500
+              text-white py-3 rounded-xl shadow-md
+              hover:opacity-90 transition flex items-center justify-center gap-1">
+                Next Question <BsArrowLeft size={18}/>
+              </button>
+
+            </motion.div>
+          )}
         </div>
       </div>
     </div>
