@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { motion } from "motion/react";
 import { CircularProgressbar,buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
-
+import {Area, AreaChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis} from "recharts";
 const Step3Report = ({report}) => {
    const navigate=useNavigate();
     if(!report){
@@ -92,9 +92,117 @@ const Step3Report = ({report}) => {
                     trailColor:"#e5e7eb",
                   })} />;
                 </div>
+                <div className='mt-4'>
+                  <p className='font-semibold text-gray-800 text-sm sm:text-base'>
+                    {performanceText}
+                  </p>
+                  <p className='text-gray-500 text-xs sm:text-sm mt-1'>
+                    {shortTagline}
+                  </p>
+                </div>
           </motion.div>
+          <motion.div
+          initial={{opacity:0}}
+          animate={{opacity:1}}
+          className='bg-white rounded-2xl sm:rounded-3xl shadow-lg p-6
+          sm:p-8'>
+            <h3 className='text-base sm:text-lg font-semibold text-gray-700 mb-6'>
+              Skill Evaluation
+            </h3>
+            <div className='space-y-5'>
+              {
+                skills.map((s,i)=>(
+                  <div key={i}>
+                    <div className='flex justify-between mb-2 text-sm sm:text-base'>
+                      <span>
+                        {s.label}
+                      </span>
+                      <span className='font-semibold text-green-600'>
+                        {s.value}
+                      </span>
+                    </div>
+                    <div className='bg-gray-200 h-2 sm:h-3 rounded-full'>
+                      <div className='bg-green-500 h-full rounded-full'
+                      style={{width:`${s.value*10}%`}}></div>
+                    </div>
+                  </div>
+                ))
+              }
+            </div>
+
+          </motion.div>
+
         </div>
-        <div></div>
+        <div className='lg:col-span-2 space-y-6'>
+          <motion.div 
+          initial={{opacity:0}}
+          animate={{opacity:1}}
+          classname="bg-white rounded-2xl sm:rounded-3xl shadow-lg p-5 sm:p-8">
+            <h3 className='text-base sm:text-lg font-semibold text-gray-700 mb-4 sm:mb-6'>
+              Performance Trend
+            </h3>
+              <div className='h-64 sm:h-72'>
+                <ResponsiveContainer width="100%" height="100%">
+                  <AreaChart data={questionScoreData}>
+                  <CartesianGrid strokeDasharray="3 3"/>
+                  <XAxis dataKey="name"/>
+                  <YAxis domain={[0,10]}/>
+                  <Tooltip/>
+                  <Area type="monotone"
+                  dataKey="score"
+                  stroke="#22c55e"
+                  fill="#bbf7do"
+                  strokeWidth={8}/>
+                  </AreaChart>
+                </ResponsiveContainer>
+              </div>
+          </motion.div>
+          <motion.div
+          initial={{opacity:0}}
+          animate={{opacity:1}}
+          className='bg-white rounded-2xl sm:rounded-3xl shadow-lg p-5 sm:p-8'>
+            <h3 className='text-base sm:text-lg font-semibold text-gray-700 mb-6'>
+              Question Breakdown
+            </h3>
+             <div className='space-y-6'>
+              {
+                questionWiseScore.map((q,i)=>(
+                  <div key={i} className='bg-gray-50 p-4 sm:p-6 rounded-xl
+                  sm:rounded-2xl border border-gray-200'>
+                    <div className='flex flex-col sm:flex-row sm:justify-center
+                    sm:items-center gap-3 mb-4'>
+                      <div>
+                        <p className='text-xs text-gray-400'>  
+                          Question {i+1}
+                        </p>
+                        <p className='font-semibold text-gray-800 text-sm
+                        sm:text-base leading-relaxed'>
+                          {q.question || "Question not available."}
+                        </p>
+                      </div>
+                      <div className='bg-green-100 text-green-600 px-3 py-1 rounded-full 
+                      font-bold text-xs sm:text-sm w-fit'>
+                        {q.score ?? 0}/10
+                      </div>
+                    </div>
+                    <div className='bg-green-50 border border-green-200 p-4 rounded-lg'>
+                      <p className='text-xs text-green-600 font-semibold mb-1'>
+                        AI Feedback
+                      </p>
+                      <p className='text-sm text-gray-700 leading-relaxed'>
+                        {q.feedback && q.feedback.trim() !== "" ?
+                        q.feedback : "No feedback available for this question."}
+
+                      </p>
+                    </div>
+                  </div>
+                ))
+              }
+             </div>
+
+          </motion.div>
+
+        </div>
       </div>
     </div>
   );
