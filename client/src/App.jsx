@@ -10,7 +10,7 @@ import { setUserData } from './redux/userSlice.js';
 import InterviewHistory from './pages/InterviewHistory.jsx';
 import Pricing from './pages/Pricing.jsx';
 import InterviewReport from './pages/InterviewReport.jsx';
-export const ServerUrl="http://localhost:3000"
+export const ServerUrl="https://ai-interview-agent-p2nl.onrender.com"
 
 const App = () => {
   const dispatch=useDispatch()
