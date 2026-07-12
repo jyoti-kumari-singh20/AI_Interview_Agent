@@ -297,7 +297,7 @@ export const submitAnswer = async (req, res) => {
     question.confidence = parsed.confidence;
     question.communication = parsed.communication;
     question.correctness = parsed.correctness;
-    question.score = parsed.score;
+    question.score = parsed.finalScore;
     question.feedback = parsed.feedback;
 
     await interview.save();
