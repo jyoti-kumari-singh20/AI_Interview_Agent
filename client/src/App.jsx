@@ -8,7 +8,7 @@ import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { setUserData } from './redux/userSlice.js';
 import InterviewHistory from './pages/InterviewHistory.jsx';
-import Pricing from './pages/Pricing.jsx';
+// import Pricing from './pages/Pricing.jsx';
 import InterviewReport from './pages/InterviewReport.jsx';
 export const ServerUrl="https://ai-interview-agent-p2nl.onrender.com"
 
@@ -34,7 +34,7 @@ const App = () => {
       <Route path='/auth' element={<Auth/>}/>
       <Route path='/interview' element={<InterviewPage/>}/>
       <Route path='/history' element={<InterviewHistory/>}/>
-      <Route path='/pricing' element={<Pricing/>}/>
+      {/* <Route path='/pricing' element={<Pricing/>}/> */}
       <Route path='/report' element={<InterviewReport/>}/>
     </Routes>
   );

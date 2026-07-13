@@ -9,10 +9,10 @@ const userSchema=mongoose.Schema({
         type:String,
         unique:true
     },
-    credits:{
-        type:Number,
-        default:100
-    }
+    // credits:{
+    //     type:Number,
+    //     default:100
+    // }
 },{timestamps:true})
 
 const User=mongoose.model("User",userSchema)

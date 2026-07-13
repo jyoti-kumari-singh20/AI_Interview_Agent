@@ -12,7 +12,7 @@ import AuthModel from './AuthModel';
 
 const Navbar = () => {
     const {userData}=useSelector((state)=>state.user)
-    const [showCreditPopup,setShowCreditPopup]=useState(false)
+    // const [showCreditPopup,setShowCreditPopup]=useState(false)
     const [showUserPopup,setShowUserPopup]=useState(false)
     const navigate=useNavigate()
     const dispatch=useDispatch()
@@ -22,7 +22,7 @@ const Navbar = () => {
             await axios.get(ServerUrl+"/api/auth/logout",
             {withCredentials:true})
             dispatch(setUserData(null))
-            setShowCreditPopup(false)
+            // setShowCreditPopup(false)
             setShowUserPopup(false)
             navigate("/")
         } catch (error) {
@@ -45,21 +45,21 @@ const Navbar = () => {
             </div>
             <div className='flex items-center gap-3 relative'>
                 <div className='relative'>
-                    <button 
+                    {/* <button 
                     onClick={()=>{
                         if(!userData){
                             setShowAuth(true)
                             return;
                         }
-                            setShowCreditPopup(!showCreditPopup);
+                            // setShowCreditPopup(!showCreditPopup);
                         setShowUserPopup(false);
                     }}
                     className='flex items-center gap-2 bg-gray-100 px-4 py-2 rounded-full
                     text-md hover:bg-gray-200 transition'>
                         <BsCoin size={20}/>
                         {userData?.credits || 0}
-                    </button>
-                    {
+                    </button> */}
+                    {/* {
                         showCreditPopup && (
                             <div className='absolute -right-12.5 mt-3 w-64 bg-white shadow-xl border border-gray-200
                             rounded p-5 z-50'>
@@ -71,7 +71,7 @@ const Navbar = () => {
                                 </button>
                             </div>
                         )
-                    }
+                    } */}
                 </div>
                 <div className='relative'>
                     <button
@@ -81,7 +81,7 @@ const Navbar = () => {
                             return;
                         }
                         setShowUserPopup(!showUserPopup);
-                        setShowCreditPopup(false)
+                        // setShowCreditPopup(false)
                     }}
                     className='w-9 h-9 bg-black text-white rounded-full
                     flex items-center justify-center font-semibold'>

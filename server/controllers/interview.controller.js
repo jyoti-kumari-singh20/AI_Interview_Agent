@@ -172,7 +172,7 @@ export const generateQuestion = async (req, res) => {
         message: "AI failed to generate questions.",
       });
     }
-    user.credits -= 5;
+    // user.credits -= 5;
     await user.save();
 
     const interview = await Interview.create({
@@ -201,7 +201,7 @@ export const generateQuestion = async (req, res) => {
 
     res.json({
       interviewId: interview._id,
-      creditsLeft: user.credits,
+      // creditsLeft: user.credits,
       userName: user.name,
       questions: interview.questions,
     });
