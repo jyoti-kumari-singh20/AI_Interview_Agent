@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { motion, moveItem } from "motion/react";
+import { useState } from "react";
+import { motion} from "motion/react";
 import {
   FaUserTie,
   FaBriefcase,
@@ -72,7 +72,7 @@ const Step1Setup = ({ onStart }) => {
       animate={{ opacity: 1 }}
       transition={{ duration: 0.6 }}
       className="min-h-screen flex items-center justify-center 
-      bg-gradient-to-br from-gray-100 to-gray-200 px-4"
+      bg-linear-to-br from-gray-100 to-gray-200 px-4"
     >
       <div
         className="w-full max-w-6xl bg-white rounded-3xl 
@@ -82,7 +82,7 @@ const Step1Setup = ({ onStart }) => {
           initial={{ x: -80, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
           transition={{ duration: 0.7 }}
-          className="relative bg-gradient-to-br from-green-50
+          className="relative bg-linear-to-br from-green-50
         to-green-100 p-12 flex flex-col justify-center"
         >
           <h2 className="text-4xl font-bold text-gray-800 mb-6">
@@ -103,7 +103,7 @@ const Step1Setup = ({ onStart }) => {
                 text: "Smart Voice Interview",
               },
               {
-                icon: <FaMicrophoneAlt className="text-green-600 text-xl" />,
+                icon: <FaChartLine className="text-green-600 text-xl" />,
                 text: "Performance Analytics",
               },
             ].map((item, index) => (

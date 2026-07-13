@@ -1,4 +1,3 @@
-import React from "react";
 import maleVideo from "../assests/videos/male-ai.mp4";
 import femaleVideo from "../assests/videos/female-ai.mp4";
 import Timer from "./timer";
@@ -170,7 +169,7 @@ const Step2Interview = ({ interviewData, onFinish }) => {
       });
     }, 1000);
     return () => clearInterval(timer);
-  }, [isIntroPhase, currentIndex]);
+  }, [isIntroPhase, currentIndex,currentQuestion]);
 
   useEffect(() => {
     if (!("webkitSpeechRecognition" in window)) {
@@ -217,7 +216,8 @@ const Step2Interview = ({ interviewData, onFinish }) => {
     recognitionRef.current = recognition;
 
     return () => recognition.stop();
-  }, []);
+  }, [startMic]);
+
   const submitAnswer = async () => {
     if (isSubmitting) return;
     stopMic();
@@ -273,24 +273,24 @@ const Step2Interview = ({ interviewData, onFinish }) => {
       console.log(error);
     }
   };
-
-  const micOnRef = useRef(true);
-  const aiPlayingRef = useRef(false);
-
-  useEffect(() => {
-    micOnRef.current = isMicOn;
-  }, [isMicOn]);
-
-  useEffect(() => {
-    aiPlayingRef.current = isAIPlaying;
-  }, [isAIPlaying]);
-  useEffect(() => {
+ useEffect(() => {
     if (isIntroPhase) return;
     if (!currentQuestion) return;
     if (timeLeft === 0 && !isSubmitting && !feedback) {
       submitAnswer();
     }
   }, [timeLeft]);
+
+  const micOnRef = useRef(true);
+  const aiPlayingRef = useRef(false);
+
+  // useEffect(() => {
+  //   micOnRef.current = isMicOn;
+  // }, [isMicOn]);
+
+  // useEffect(() => {
+  //   aiPlayingRef.current = isAIPlaying;
+  // }, [isAIPlaying]);
 
   useEffect(() => {
     return () => {
@@ -421,7 +421,7 @@ const Step2Interview = ({ interviewData, onFinish }) => {
                 onClick={submitAnswer}
                 disabled={isSubmitting}
                 whileTap={{ scale: 0.95 }}
-                className="flex-1 bg-gradient-to-r from-emerald-600 to-teal-500
+                className="flex-1 bg-linear-to-r from-emerald-600 to-teal-500
           text-white py-3 sm:py-4 rounded-2xl shadow-lg hover:opacity-90
           transition font-semibold disabled:bg-gray-500"
               >
@@ -438,7 +438,7 @@ const Step2Interview = ({ interviewData, onFinish }) => {
               <p className="text-emerald-700 font-medium mb-4">{feedback}</p>
               <button
                 onClick={handleNext}
-                className="w-full bg-gradient-to-r from-emerald-600 to-teal-500
+                className="w-full bg-linear-to-r from-emerald-600 to-teal-500
               text-white py-3 rounded-xl shadow-md
               hover:opacity-90 transition flex items-center justify-center gap-1"
               >
