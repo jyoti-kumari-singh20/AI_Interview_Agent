@@ -85,7 +85,7 @@ const Home = () => {
                     setShowAuth(true);
                     return;
                   }
-                  navigate("/histroy");
+                  navigate("/history");
                 }}
                 whileHover={{ opacity: 0.9, scale: 1.03 }}
                 whileTap={{ opacity: 1, scale: 0.98 }}
